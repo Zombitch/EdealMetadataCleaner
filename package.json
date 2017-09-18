@@ -1,0 +1,23 @@
+{
+  "name": "edealmetadatacleaner",
+  "version": "1.0.0",
+  "description": "Tool which clean useless data in E-Deal metadata file",
+  "main": "app.js",
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "1.7.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zombitch/EdealMetadataCleaner.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Zombitch/EdealMetadataCleaner/issues"
+  },
+  "homepage": "https://github.com/Zombitch/EdealMetadataCleaner#readme"
+}
