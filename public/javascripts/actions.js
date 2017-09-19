@@ -1,3 +1,7 @@
+$(document).ready(function(){
+  $("#progressContainer").hide();
+});
+
 /**
 * Ask main process to start cleaning file.
 */
@@ -16,4 +20,15 @@ function chooseFile(){
       $("#filename").val(files[0]);
     }
   });
+}
+
+/**
+*
+*/
+function closeParametersWindows(shouldSave){
+  if(shouldSave){
+    ipc.send('confirm_parameter', {data:""});
+  }else{
+    ipc.send('cancel_parameter');
+  }
 }
