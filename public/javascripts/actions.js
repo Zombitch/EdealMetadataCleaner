@@ -23,12 +23,45 @@ function chooseFile(){
 }
 
 /**
-*
+* Close the parameter windows
+* @param shouldSave Does the system have to save data
 */
 function closeParametersWindows(shouldSave){
   if(shouldSave){
-    ipc.send('confirm_parameter', {data:""});
+    var arrayOfRadical = [];
+    $("#radicalList > li > div").each(function(idx, element){
+        arrayOfRadical[idx] = $(element).text().replace("delete", "");
+    });
+    ipc.send('confirm_parameter', {data:arrayOfRadical});
   }else{
     ipc.send('cancel_parameter');
   }
+}
+
+/**
+* Add radical entered in input text, in the Table reference list
+*/
+function addRadicalSettings(){
+  var radicalToAdd = $("#radical").val();
+
+  addRadicalSettings(radicalToAdd);
+}
+
+/**
+* Add radical send as parameter in the Table reference list
+* @param radicalToAdd The radical to add to the list
+*/
+function addRadicalSettings(radicalToAdd){
+  if(radicalToAdd == ""){
+    alert("Veuillez saisir une valeur.");
+  }else{
+    $("#radicalList").append("<li id=\"radical_"+radicalToAdd+"\" class=\"collection-item\"><div>"+radicalToAdd+"<a href=\"javascript:deleteRadicalSettings('"+radicalToAdd+"')\" class=\"secondary-content\"><i class=\"material-icons red-text\">delete</i></a></div></li>");
+  }
+}
+
+/**
+* Remove a radical from the list settings
+*/
+function deleteRadicalSettings(radicalToDelete){
+  $("#radical_"+radicalToDelete).remove();
 }

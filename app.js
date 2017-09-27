@@ -39,9 +39,10 @@ ipc.on('clean', (event, arg) => {
 });
 
 ipc.on('confirm_parameter', (event, arg) => {
-    mainWindow.loadURL('file://'+__dirname+'/views/index.html');
+  MCEngine.saveSettings(arg.data);
+  mainWindow.loadURL('file://'+__dirname+'/views/index.html');
 });
 
 ipc.on('cancel_parameter', (event, arg) => {
-    mainWindow.loadURL('file://'+__dirname+'/views/index.html');
+  mainWindow.loadURL('file://'+__dirname+'/views/index.html');
 });
