@@ -2,6 +2,8 @@ const electron = require('electron');
 const MCEngine = require("./api/metadatacleaner/mcengine");
 const RouteMenu = require("./routes/menu/mainMenu");
 const fs = require('fs');
+const readline = require('readline');
+const stream = require('stream');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const ipc = electron.ipcMain;
@@ -36,11 +38,19 @@ app.on('activate', () => {
 });
 
 ipc.on('clean', (event, arg) => {
-  MCEngine.computeLineCountFromFile(arg.filepath).then(function(count){
-    console.log(count);
-  });
+  var instream = fs.createReadStream(arg.filepath);
+  var outstream = new stream;
+  var reader = null;
 
-  event.sender.send('progress', {percentage: 4, done: false});
+  MCEngine.computeLineCountFromFile(arg.filepath).then(function(totalLine){
+    var currentLine = 1;
+    reader = readline.createInterface(instream, outstream);
+    reader.on('line', function(line) {
+      console.log(line);
+      currentLine++;
+      event.sender.send('progress', {percentage: 99, done: false});
+    })
+  });
 });
 
 ipc.on('confirm_parameter', (event, arg) => {

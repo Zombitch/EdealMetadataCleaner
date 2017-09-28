@@ -1,5 +1,4 @@
 ipc.on('progress', (event, arg) => {
-  console.log(arg);
   setProgress(arg.percentage);
 });
 

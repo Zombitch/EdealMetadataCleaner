@@ -6,13 +6,13 @@ $(document).ready(function(){
 * Ask main process to start cleaning file.
 */
 function startProcess(){
-  ipc.send('clean', {filepath:$("#filename").val()});
-  $("#progressContainer").show();
   setProgress(0);
+  $("#progressContainer").show();
+  ipc.send('clean', {filepath:$("#filename").val()});
 }
 
 function setProgress(value){
-  $("#progressBar").width(value);
+  $("#progressBar").css("width", value+"%");
   $("#progressText").html("Avancement: "+value+"%");
 }
 
