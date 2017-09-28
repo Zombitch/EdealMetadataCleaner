@@ -7,6 +7,7 @@ $(document).ready(function(){
 */
 function startProcess(){
   ipc.send('clean', {filepath:$("#filename").val()});
+  $("#progressContainer").show();
 }
 
 /**

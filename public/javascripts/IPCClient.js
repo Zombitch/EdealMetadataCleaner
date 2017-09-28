@@ -1,5 +1,5 @@
 ipc.on('progress', (event, arg) => {
-  console.log("PROGRESS");
+  console.log(arg);
 });
 
 ipc.on('load_settings', (event, arg) => {

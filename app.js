@@ -40,7 +40,7 @@ ipc.on('clean', (event, arg) => {
     console.log(count);
   });
 
-  event.sender.send('progress');
+  event.sender.send('progress', {percentage: 4, done: false});
 });
 
 ipc.on('confirm_parameter', (event, arg) => {
