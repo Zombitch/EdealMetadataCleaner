@@ -8,6 +8,12 @@ $(document).ready(function(){
 function startProcess(){
   ipc.send('clean', {filepath:$("#filename").val()});
   $("#progressContainer").show();
+  setProgress(0);
+}
+
+function setProgress(value){
+  $("#progressBar").width(value);
+  $("#progressText").html("Avancement: "+value+"%");
 }
 
 /**
