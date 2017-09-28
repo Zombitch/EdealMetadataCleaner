@@ -1,6 +1,7 @@
 const electron = require('electron');
 const MCEngine = require("./api/metadatacleaner/mcengine");
 const RouteMenu = require("./routes/menu/mainMenu");
+const fs = require('fs');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const ipc = electron.ipcMain;
@@ -35,7 +36,11 @@ app.on('activate', () => {
 });
 
 ipc.on('clean', (event, arg) => {
-    event.sender.send('progress');
+  MCEngine.computeLineCountFromFile(arg.filepath).then(function(count){
+    console.log(count);
+  });
+
+  event.sender.send('progress');
 });
 
 ipc.on('confirm_parameter', (event, arg) => {
