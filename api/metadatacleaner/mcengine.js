@@ -46,7 +46,6 @@ MCEngine = {
             var currentRadical = trimedLine.substring(startIndex, endIndex);
 
             if(radicalToClean.includes(currentRadical)){
-              console.log(currentRadical);
               self.isCleaning = true;
             }
           }
