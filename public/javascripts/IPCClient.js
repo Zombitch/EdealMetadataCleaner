@@ -1,5 +1,10 @@
 ipc.on('progress', (event, arg) => {
-  setProgress(parseInt(arg.percentage));
+  if(arg.done){
+    $("#progressContainer").hide();
+    alert("Le fichier a été généré.");
+  }else{
+      setProgress(parseInt(arg.percentage));
+  }
 });
 
 ipc.on('load_settings', (event, arg) => {
