@@ -59,7 +59,12 @@ MCEngine = {
           }
 
           currentLine++;
-          event.sender.send('progress', {percentage: parseInt(currentLine/totalLine*100), done: false});
+          reader.pause();
+
+          setTimeout(function () {
+            event.sender.send('progress', {percentage: parseInt(currentLine/totalLine*100), done: false});
+            reader.resume();
+          }, 250);
         }).on("end", function(){
           self.isCleaning = false;
           writeStream.end();
