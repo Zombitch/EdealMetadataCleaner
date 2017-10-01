@@ -1,5 +1,5 @@
 ipc.on('progress', (event, arg) => {
-  setProgress(arg.percentage);
+  setProgress(parseInt(arg.percentage));
 });
 
 ipc.on('load_settings', (event, arg) => {
