@@ -1,5 +1,6 @@
 $(document).ready(function(){
   $("#progressContainer").hide();
+  $('.modal').modal();
 });
 
 /**
