@@ -31,36 +31,41 @@ MCEngine = {
     var writeStream = fs.createWriteStream(filepath+".new");
     var outstream = new stream;
     var reader = null;
-    var radicalToClean = this.getSettings();
     var self = this;
 
-    this.computeLineCountFromFile(filepath).then(function(totalLine){
-      var currentLine = 1;
-      reader = readline.createInterface(readStream, outstream);
-      reader.on('line', function(line) {
-        var trimedLine = line.trim();
+    this.getSettings().then(function(radicalToClean){
+      self.computeLineCountFromFile(filepath).then(function(totalLine){
+        var currentLine = 1;
+        reader = readline.createInterface(readStream, outstream);
+        reader.on('line', function(line) {
+          var trimedLine = line.trim();
 
-        if(!self.isCleaning && trimedLine.startsWith(self.cleanAnalyzer.startWith)){
-          var startIndex = trimedLine.indexOf(self.cleanAnalyzer.attributName)+self.cleanAnalyzer.attributName.length + 2;
-          var endIndex = startIndex+3
-          console.log(trimedLine.substring(startIndex, endIndex));
-          self.isCleaning = true;
-        }
+          if(!self.isCleaning && trimedLine.startsWith(self.cleanAnalyzer.startWith)){
+            var startIndex = trimedLine.indexOf(self.cleanAnalyzer.attributName)+self.cleanAnalyzer.attributName.length + 2;
+            var endIndex = startIndex+3
+            var currentRadical = trimedLine.substring(startIndex, endIndex);
 
-        if(!self.isCleaning){
-          writeStream.write(line+"\n");
-        }
+            if(radicalToClean.includes(currentRadical)){
+              console.log(currentRadical);
+              self.isCleaning = true;
+            }
+          }
 
-        if(self.isCleaning && trimedLine.startsWith(self.cleanAnalyzer.endWith)){
+          if(!self.isCleaning){
+            writeStream.write(line+"\n");
+          }
+
+          if(self.isCleaning && trimedLine.startsWith(self.cleanAnalyzer.endWith)){
+            self.isCleaning = false;
+          }
+
+          currentLine++;
+          event.sender.send('progress', {percentage: parseInt(currentLine/totalLine*100), done: false});
+        }).on("end", function(){
           self.isCleaning = false;
-        }
-
-        currentLine++;
-        event.sender.send('progress', {percentage: parseInt(currentLine/totalLine*100), done: false});
-      }).on("end", function(){
-        self.isCleaning = false;
-        writeStream.end();
-        event.sender.send('progress', {percentage: 100, done: true});
+          writeStream.end();
+          event.sender.send('progress', {percentage: 100, done: true});
+        });
       });
     });
   },
