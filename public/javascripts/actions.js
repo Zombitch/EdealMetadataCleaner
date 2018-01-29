@@ -13,6 +13,15 @@ function startProcess(){
 }
 
 /**
+* Cancel process cleaning
+*/
+function cancelProcess(){
+  setProgress(0);
+  $("#progressContainer").hide();
+  ipc.send('stop', {filepath:$("#filename").val()});
+}
+
+/**
 * Update progress bar with value
 @param value Percentage value
 */

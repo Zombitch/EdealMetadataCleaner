@@ -8,6 +8,8 @@ const ipc = electron.ipcMain;
 MCEngine = {
 
   isCleaning: false,
+  shouldStop: false,
+  reader: null,
 
   /**
   * Specify what to be cleaned.
@@ -29,6 +31,14 @@ MCEngine = {
   },
 
   /**
+  * Stop Cleaning and delete created file
+  */
+  stopProcess:function(event, filepath){
+    this.shouldStop = true;
+    reader.close();
+  },
+
+  /**
   * Launch the cleaning process
   * @param event Event that send data to the client in order to notice about progress running percentage
   */
@@ -36,7 +46,6 @@ MCEngine = {
     var readStream = fs.createReadStream(filepath);
     var writeStream = fs.createWriteStream(filepath+".new");
     var outstream = new stream;
-    var reader = null;
     var self = this;
 
     this.getSettings().then(function(radicalToClean){
@@ -73,9 +82,19 @@ MCEngine = {
             reader.resume();
           }, 2*1000);
         }).on("close", function(){
-          self.isCleaning = false;
           writeStream.end();
-          event.sender.send('progress', {percentage: 100, done: true});
+          //If shouldStop is true, then it means the user want to stop the analysis, then delete the created file
+          if(self.shouldStop){
+            if (fs.existsSync(filepath+".new")) {
+              fs.unlink(filepath+".new", (err) => {
+                if (err) console.log(err);
+              });
+            }
+          }else{
+            event.sender.send('progress', {percentage: 100, done: true});
+          }
+          self.isCleaning = false;
+          self.shouldStop = false;
         });
       });
     });

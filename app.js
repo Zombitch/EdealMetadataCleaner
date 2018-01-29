@@ -38,6 +38,10 @@ ipc.on('clean', (event, arg) => {
   MCEngine.processCleaning(event, arg.filepath);
 });
 
+ipc.on('stop', (event, arg) => {
+  MCEngine.stopProcess(event, arg.filepath);
+});
+
 ipc.on('confirm_parameter', (event, arg) => {
   MCEngine.saveSettings(arg.data);
   mainWindow.loadURL('file://'+__dirname+'/views/index.html');
