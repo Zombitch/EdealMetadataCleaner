@@ -64,6 +64,7 @@ function addRadicalSettings(radicalToAdd){
     alert("Veuillez saisir une valeur.");
   }else{
     $("#radicalList").append("<li id=\"radical_"+radicalToAdd+"\" class=\"collection-item\"><div>"+radicalToAdd+"<a href=\"javascript:deleteRadicalSettings('"+radicalToAdd+"')\" class=\"secondary-content\"><i class=\"material-icons red-text\">delete</i></a></div></li>");
+    $("#radical").val("");
   }
 }
 

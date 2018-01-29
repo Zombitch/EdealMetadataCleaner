@@ -64,7 +64,7 @@ MCEngine = {
           setTimeout(function () {
             event.sender.send('progress', {percentage: parseInt(currentLine/totalLine*100), done: false});
             reader.resume();
-          }, 250);
+          }, 2*1000);
         }).on("close", function(){
           self.isCleaning = false;
           writeStream.end();
