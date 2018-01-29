@@ -9,6 +9,12 @@ MCEngine = {
 
   isCleaning: false,
 
+  /**
+  * Specify what to be cleaned.
+  * In this exemple : systeme will clean everything that start with <reference which had an attribute "radical" and the value to that attribute is in the parameter list defined by user.
+  * It will delete all line until </reference> is found.
+  * /!\ The XML file should be formatted correctly (each tag should return a new line).
+  */
   cleanAnalyzer: {
     startWith: "<reference",
     endWith: "</reference>",
@@ -61,6 +67,7 @@ MCEngine = {
           currentLine++;
           reader.pause();
 
+          //Timeout in order to give some air to the CPU and refresh the view
           setTimeout(function () {
             event.sender.send('progress', {percentage: parseInt(currentLine/totalLine*100), done: false});
             reader.resume();

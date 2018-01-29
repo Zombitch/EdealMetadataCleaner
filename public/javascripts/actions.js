@@ -12,6 +12,10 @@ function startProcess(){
   ipc.send('clean', {filepath:$("#filename").val()});
 }
 
+/**
+* Update progress bar with value
+@param value Percentage value
+*/
 function setProgress(value){
   $("#progressBar").css("width", value+"%");
   $("#progressText").html("Avancement: "+value+"%");
@@ -70,6 +74,7 @@ function addRadicalSettings(radicalToAdd){
 
 /**
 * Remove a radical from the list settings
+@param radicalToDelete The radical to delete from the view
 */
 function deleteRadicalSettings(radicalToDelete){
   $("#radical_"+radicalToDelete).remove();
