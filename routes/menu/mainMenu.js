@@ -6,7 +6,8 @@ const app = electron.app;
 
 var MainMenu = {
   subscribeToSettingsDidFinishLoadEvent : false,
-  template : [{
+  template : [
+  {
     label: 'File',
     submenu: [
       {
@@ -14,19 +15,24 @@ var MainMenu = {
         accelerator: "CmdOrCtrl+R"
       },
       {
+        label: 'Quitter',
+        accelerator: "CmdOrCtrl+Q",
+        click: () => {
+          app.quit();
+        }
+      }
+    ]
+  },
+  {
+    label: 'Options',
+    submenu: [
+      {
         label: 'Paramètres',
         accelerator: "CmdOrCtrl+P"
       },
       {
         label: 'DevTools',
         accelerator: "CmdOrCtrl+D"
-      },
-      {
-        label: 'Quitter',
-        accelerator: "CmdOrCtrl+Q",
-        click: () => {
-          app.quit();
-        }
       }
     ]
   }],
@@ -42,11 +48,11 @@ var MainMenu = {
       mainWindow.reload();
     }
 
-    this.template[0].submenu[1].click = function(){
+    this.template[1].submenu[0].click = function(){
       mainWindow.loadURL('file://'+__dirname+'../../../views/settings.html', {"extraHeaders" : "pragma: no-cache\n"});
 
       //Load setting only once otherwise it will duplicate settings entry in the parameter view
-      if(trueself.subscribeToSettingsDidFinishLoadEvent){
+      if(self.subscribeToSettingsDidFinishLoadEvent){
         mainWindow.webContents.on("did-finish-load", function(){
           MCEngine.getSettings().then(function(data){
             if(data != false){
@@ -60,7 +66,7 @@ var MainMenu = {
       }
     }
 
-    this.template[0].submenu[2].click = function(){
+    this.template[1].submenu[1].click = function(){
       mainWindow.toggleDevTools();
     }
 
