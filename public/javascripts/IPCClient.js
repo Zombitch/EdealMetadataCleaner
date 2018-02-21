@@ -3,11 +3,14 @@
 * Main thread notify view to update in order to display progress percentage
 */
 ipc.on('progress', (event, arg) => {
+  setProgress(parseInt(arg.percentage));
+
   if(arg.done){
-    $("#progressContainer").hide();
-    //alert("Le fichier a été généré.");
-  }else{
-      setProgress(parseInt(arg.percentage));
+    setProgress(100);
+    setTimeout(function(){
+      alert("Le fichier a été généré.");
+      $("#progressContainer").hide();
+    }, 1000);
   }
 });
 
