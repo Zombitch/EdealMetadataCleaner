@@ -5,7 +5,7 @@
 ipc.on('progress', (event, arg) => {
   if(arg.done){
     $("#progressContainer").hide();
-    alert("Le fichier a été généré.");
+    //alert("Le fichier a été généré.");
   }else{
       setProgress(parseInt(arg.percentage));
   }
