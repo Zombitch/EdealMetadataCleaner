@@ -29,11 +29,11 @@ var MainMenu = {
       {
         label: 'Paramètres',
         accelerator: "CmdOrCtrl+P"
-      },
+      }/*,
       {
         label: 'DevTools',
         accelerator: "CmdOrCtrl+D"
-      }
+      }*/
     ]
   }],
 
@@ -66,9 +66,10 @@ var MainMenu = {
       }
     }
 
+    /*
     this.template[1].submenu[1].click = function(){
       mainWindow.toggleDevTools();
-    }
+    }*/
 
     return menu.buildFromTemplate(this.template);
   }
