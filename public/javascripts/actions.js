@@ -1,7 +1,8 @@
 $(document).ready(function(){
   $("#progressContainer").hide();
-  $('.modal').modal();
+  $(".modal").modal();
   enableDragAndDrop("bodyElement");
+  addListenerKeyUp("radical", 13, addRadicalSettings);
 });
 
 /**
@@ -10,28 +11,29 @@ $(document).ready(function(){
 */
 function enableDragAndDrop(elementId){
   element = document.getElementById(elementId);
+  if(element != null){
+    element.ondragover = () => {
+        return false;
+    };
 
-  element.ondragover = () => {
-      return false;
-  };
+    element.ondragleave = () => {
+        return false;
+    };
 
-  element.ondragleave = () => {
-      return false;
-  };
+    element.ondragend = () => {
+        return false;
+    };
 
-  element.ondragend = () => {
-      return false;
-  };
+    element.ondrop = (e) => {
+        e.preventDefault();
 
-  element.ondrop = (e) => {
-      e.preventDefault();
+        for (let f of e.dataTransfer.files) {
+            $("#filename").val(f.path);
+        }
 
-      for (let f of e.dataTransfer.files) {
-          $("#filename").val(f.path);
-      }
-
-      return false;
-  };
+        return false;
+    };
+  }
 }
 
 /**
@@ -91,24 +93,46 @@ function closeParametersWindows(shouldSave){
 }
 
 /**
+* Add key up event on html element
+* @param element
+* @param keyCode
+* @param callback
+* @param callbackParam
+*/
+function addListenerKeyUp(element, keyCode, callback, callbackParam){
+  $("#"+element).keyup(function(event){
+    if(event.keyCode == keyCode){
+      if(typeof callbackParam === 'undefined') callback();
+      else callback(callbackParam);
+    }
+  });
+}
+
+/**
 * Add radical entered in input text, in the Table reference list
 */
 function addRadicalSettings(){
   var radicalToAdd = $("#radical").val();
 
-  addRadicalSettings(radicalToAdd);
+  addRadicalSettingsValue(radicalToAdd);
 }
 
 /**
 * Add radical send as parameter in the Table reference list
 * @param radicalToAdd The radical to add to the list
 */
-function addRadicalSettings(radicalToAdd){
+function addRadicalSettingsValue(radicalToAdd){
   if(radicalToAdd == ""){
     alert("Veuillez saisir une valeur.");
   }else{
-    $("#radicalList").append("<li id=\"radical_"+radicalToAdd+"\" class=\"collection-item\"><div>"+radicalToAdd+"<a href=\"javascript:deleteRadicalSettings('"+radicalToAdd+"')\" class=\"secondary-content\"><i class=\"material-icons red-text\">delete</i></a></div></li>");
-    $("#radical").val("");
+    var values = radicalToAdd.split(";");
+
+    values.forEach(function(entity){
+      if(entity != ""){
+        $("#radicalList").append("<li id=\"radical_"+entity+"\" class=\"collection-item\"><div>"+entity+"<a href=\"javascript:deleteRadicalSettings('"+entity+"')\" class=\"secondary-content\"><i class=\"material-icons red-text\">delete</i></a></div></li>");
+        $("#radical").val("");
+      }
+    });
   }
 }
 
