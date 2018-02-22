@@ -5,7 +5,7 @@ $(document).ready(function(){
   addListenerKeyUp("radical", 13, addRadicalSettings);
 
   //Display version
-  $("#version").html(remote.app.getVersion());
+  $("#version").html("v"+remote.app.getVersion());
 });
 
 /**
