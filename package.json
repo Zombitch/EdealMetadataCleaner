@@ -1,7 +1,6 @@
 {
   "name": "edealmetadatacleaner",
   "version": "2.0.0",
-  "buildVersion": "201802222235",
   "description": "Tool which clean useless data in E-Deal metadata file",
   "main": "app.js",
   "dependencies": {
