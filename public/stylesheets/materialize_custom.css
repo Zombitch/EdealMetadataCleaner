@@ -1,0 +1,33 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.umanis-color{
+  background-color: #D44361;
+}
+
+.umanis-color:visited{
+  background-color: #D44361;
+}
+
+.umanis-color:focus{
+  background-color: #D44361;
+}
+
+.umanis-color:hover{
+  background-color: #E2686D;
+}
+
+.umanis-text-color{
+  color: #D44361;
+}
+
+.umanis-color-lighten-1{
+  background-color: #EC9495;
+}
