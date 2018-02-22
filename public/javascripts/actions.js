@@ -3,6 +3,9 @@ $(document).ready(function(){
   $(".modal").modal();
   enableDragAndDrop("bodyElement");
   addListenerKeyUp("radical", 13, addRadicalSettings);
+
+  //Display version
+  $("#version").html(remote.app.getVersion());
 });
 
 /**
