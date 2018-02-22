@@ -1,7 +1,38 @@
 $(document).ready(function(){
   $("#progressContainer").hide();
   $('.modal').modal();
+  enableDragAndDrop("bodyElement");
 });
+
+/**
+* Add drag and drop event to an HTML element
+* @param elementId
+*/
+function enableDragAndDrop(elementId){
+  element = document.getElementById(elementId);
+
+  element.ondragover = () => {
+      return false;
+  };
+
+  element.ondragleave = () => {
+      return false;
+  };
+
+  element.ondragend = () => {
+      return false;
+  };
+
+  element.ondrop = (e) => {
+      e.preventDefault();
+
+      for (let f of e.dataTransfer.files) {
+          $("#filename").val(f.path);
+      }
+
+      return false;
+  };
+}
 
 /**
 * Ask main process to start cleaning file.
