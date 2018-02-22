@@ -19,6 +19,6 @@ ipc.on('progress', (event, arg) => {
 */
 ipc.on('load_settings', (event, arg) => {
   arg.forEach(function(element){
-    addRadicalSettings(element);
+    addRadicalSettingsValue(element);
   });
 });

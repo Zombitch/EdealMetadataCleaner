@@ -50,10 +50,10 @@ var MainMenu = {
 
     this.template[1].submenu[0].click = function(){
       mainWindow.loadURL('file://'+__dirname+'../../../views/settings.html', {"extraHeaders" : "pragma: no-cache\n"});
-
       //Load setting only once otherwise it will duplicate settings entry in the parameter view
-      if(self.subscribeToSettingsDidFinishLoadEvent){
+      if(!self.subscribeToSettingsDidFinishLoadEvent){
         mainWindow.webContents.on("did-finish-load", function(){
+
           MCEngine.getSettings().then(function(data){
             if(data != false){
               mainWindow.webContents.send('load_settings', data);
